@@ -49,7 +49,6 @@ def json_to_csv():
                 aggregatewriter.writerow(rowDict)
             subjectfile.close()
 
-            break
 
 
 
