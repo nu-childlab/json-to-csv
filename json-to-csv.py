@@ -31,22 +31,30 @@ def json_to_csv():
         headers = [item for sublist in headers for item in sublist]
         headers = list(set(headers))
 
-        csvfile = open('aggregate_data.csv', 'wb')
-        csv.DictWriter(csvfile, headers)
+        csvfile = open('csv/aggregate_data.csv', 'wb')
+        aggregatewriter = csv.DictWriter(csvfile, headers)
+        aggregatewriter.writeheader()
 
-        for key in d_keys:
+        for data_key in d_keys:
             #for each subject
-            curr_data = d[key]
+            curr_data = d[data_key]
+            subjectfile = open("csv/" + str(data_key) + '.csv', 'wb')
+            subjectwriter = csv.DictWriter(subjectfile, headers)
+            subjectwriter.writeheader()
             for trial in curr_data:
                 rowDict = {}
-                print trial
-                return
+                for trial_key in trial.keys():
+                    rowDict[trial_key] = trial[trial_key]
+                subjectwriter.writerow(rowDict)
+                aggregatewriter.writerow(rowDict)
+            subjectfile.close()
+
+            break
 
 
 
         csvfile.close()
-        # for key in d.keys():
-        #     print d[key].keys
+        return
 
 
 
